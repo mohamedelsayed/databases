@@ -1,5 +1,5 @@
 # databases:
-it conains databases drivers redis, timescale, pgadmin, mongodb, mysql, phpmyadmin
+it conains databases drivers redis, timescale, pgadmin, mongodb, mysql, phpmyadmin, and you can run it as docker containers
 ## PreRequest
 -   Install Docker
 -   Install Docker Compose
