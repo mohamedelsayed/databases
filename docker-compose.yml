@@ -1,0 +1,93 @@
+version: '3.7'
+services:
+    redis:
+        image: redis:alpine
+        container_name: databases-redis
+        restart: always
+        ports:
+        - 6379:6379
+        volumes:
+            - redis:/data      
+        networks:
+            - databases
+    timescale:
+        image: timescale/timescaledb:latest-pg11
+        container_name: databases-timescale
+        restart: always
+        environment:
+            POSTGRES_USER: root
+            POSTGRES_PASSWORD: root
+            POSTGRES_DB: timescale
+        volumes:
+            - timescale:/var/lib/postgresql/data
+        ports:
+            - "5432:5432"
+        networks:        
+            - databases
+    pgadmin:
+        image: dpage/pgadmin4
+        container_name: databases-pgadmin
+        restart: always
+        links:
+            - timescale
+        environment:
+            PGADMIN_DEFAULT_EMAIL: root@root.com
+            PGADMIN_DEFAULT_PASSWORD: root
+        ports:
+            - "5050:80"
+        networks:
+            - databases
+        volumes:
+            - pgadmin:/var/lib/pgadmin
+    mongodb:
+        image: mongo:4.4
+        container_name: databases-mongodb
+        restart: always
+        ports:
+            - 27017:27017
+        volumes:
+            - mongodb:/data/db
+        networks:
+            - databases
+    mysql:
+        image: mysql:5.7
+        container_name: databases-mysql
+        restart: always
+        ports:
+            - 3306:3306
+        environment:
+            MYSQL_PASSWORD: root
+            MYSQL_ROOT_PASSWORD: root
+        volumes:
+            - mysql:/var/lib/mysql
+        networks:
+            - databases
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        container_name: databases-phpmyadmin
+        links:
+            - mysql
+        environment:
+            PMA_HOST: mysql
+            PMA_PORT: 3306
+            PMA_ARBITRARY: 1
+        restart: always
+        ports:
+            - 8081:80
+        networks:
+            - databases    
+networks:
+    databases:
+        driver: bridge
+        external: false
+volumes:
+    redis:
+        driver: local
+    timescale:
+        driver: local
+    mongodb:
+        driver: local
+    mysql:
+        driver: local
+    pgadmin:
+        driver: local
