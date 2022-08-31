@@ -11,7 +11,7 @@ services:
         networks:
             - databases
     timescale:
-        image: timescale/timescaledb:latest-pg11
+        image: timescale/timescaledb:latest-pg12
         container_name: databases-timescale
         restart: always
         environment:
