@@ -6,19 +6,13 @@ it contains databases drivers redis, timescale, pgadmin, mongodb, mysql, phpmyad
 -   Install Docker Compose
    
 ## to up docker compose:
-
-```
-docker-compose up -d --build
-```
+- Run `docker-compose up -d --build` 
 
 ## to down docker compose:
-```
-docker-compose down
-```
+- Run `docker-compose down` 
 
 ## to access phpmyadmin:
 http://localhost:8081
 
 ## to access pgadmin:
 http://localhost:5050
-
